@@ -17,6 +17,7 @@ This is hotstar movie app have search functionality with suggestions this is a s
 ## learning
 - in this project i learnt how to fetch the data from api
 - use the fetch funtion and get the data
+- how to use debouncing. and geting the suggestion according to search 
 
 Thanks
 
