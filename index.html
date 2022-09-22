@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotstar</title>
+
+<style>
+
+    *{
+        padding:0px;
+        margin: 0px;
+        box-sizing: border-box;
+        font-family: Roboto, HelveticaNeue-Light, sans-serif;;
+    }
+
+body{
+    background-color: #131a27;
+}
+
+
+#navbar{
+
+    width:100%;
+    position: sticky;
+    top:0px;
+    height:80px;
+    display:grid;
+    grid-template-columns: repeat(8,1fr);
+    grid-template-rows: 80px;
+    gap:10px;
+    align-items: center;
+    color: #9fc6d4;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+
+
+#navbar>div:nth-child(1)>img{
+
+  width:30px;
+  height:30px;
+  margin-left: 30px;
+}
+
+#navbar>div:nth-child(2)>img{
+
+width:80px;
+height:50px;
+}
+
+#navbar>div:nth-child(8)>img{
+
+width:20px;
+height:20px;
+
+
+}
+
+#navbar>div:nth-child(7)>div:nth-child(1)>input{
+
+width:300px;
+height:30px;
+color:#9fc6d4;
+background-color:#131a27; 
+border:none; 
+ border-bottom: 1px solid #9fc6d4;
+outline: none;
+font-size: 20px;
+
+
+}
+
+
+#movielist{
+
+width:300px;
+position: fixed;
+
+height: auto;
+top:60px;
+color:#9fc6d4;
+background-color: #131a27;
+overflow-x: hidden;
+font-size: 16px;
+
+}
+
+#movie{
+ display: flex;
+
+ gap:10px;
+ padding:10px;
+ align-items:center;
+    
+}
+#movie>img{
+    width:28%;
+    height:100px;
+}
+
+#container{
+    width:50%;
+    height:500px;
+    margin-left: 40px;
+
+    margin-top: 10px;
+  
+
+}
+
+#selectmovie{
+    width:100%;
+    height:auto;
+    text-align: center;
+    color: white;
+
+}
+
+#selectmovie>img{
+    width:100%;
+    height:500px;
+    
+}
+
+
+</style>
+
+
+
+</head>
+
+
+<body>
+
+    <div id="navbar">
+
+        <div><img
+                src="https://icon-library.com/images/three-bar-menu-icon/three-bar-menu-icon-3.jpg"
+                alt="icon"></div>
+        <div><img
+                src="https://gumlet.assettype.com/freepressjournal/2021-02/db393c6b-ddd7-4c9e-95ed-15945417319f/hotstar.jpg"
+                alt="logo"></div>
+        <div>TV</div>
+        <div>Movies</div>
+        <div>Sports</div>
+        <div>Disney+</div>
+        <div>
+        <div> <input oninput="debounce(main,2000)"   type="text" placeholder="Search"  id="search"></div>
+        <div id="movielist"></div>
+    </div>
+        <div><img src="https://image.shutterstock.com/image-vector/search-icon-sign-design-260nw-730234714.jpg"
+                alt="search icon"></div>
+    </div>
+
+
+    <div id="container"></div>
+
+</body>
+
+</html>
+
+
+<script>
+
+
+ 
+async function main(){
+   let   query = document.getElementById("search").value;
+ let data = await  getData(query);
+ console.log(data);
+ append(data)
+
+  
+ }
+
+
+
+
+
+async function getData(query){
+  
+const url = `https://www.omdbapi.com/?apikey=27c9275d&s=${query}`;
+let res =  await fetch(url);
+let data = await res.json();
+  return data.Search  
+}
+
+
+function append(data){
+   
+   let movielist =  document.getElementById("movielist")
+   movielist.innerHTML=null;
+   movielist.style.height="400px"
+ 
+
+
+   if(!data){
+        return;
+    }
+   
+   data.forEach(function(el){
+    
+    let div = document.createElement("div");
+   let image = document.createElement("img");
+   let title = document.createElement("p");
+
+    image.src=el.Poster;
+     title.innerText=el.Title;
+     div.setAttribute("id","movie")
+    
+     div.addEventListener("click",function(){
+     let select = document.querySelector("#container")
+    select.innerHTML="";
+     let div = document.createElement("div");
+     div.setAttribute("id","selectmovie")
+     let image = document.createElement("img");
+     let title = document.createElement("h1");
+     let year =  document.createElement("p");
+     let rating = document.createElement("p");
+     let Rating = newrating();
+     image.src=el.Poster;
+    title.innerText=el.Title;
+    year.innerText  = `Release Year:- ${el.Year}`;
+    rating.innerText = `Rating:- ${Rating} /10`;
+    div.append(image,title,year,rating);
+    select.append(div);
+       
+     })
+
+     div.append(image,title)
+    movielist.append(div)
+
+  
+
+
+   })
+
+}
+
+let id;
+function debounce(func,delay){
+   if(id){
+    clearTimeout(id);
+   }
+ 
+   id =  setTimeout(function (){
+        func();
+
+   },delay)
+
+
+}
+
+
+
+
+
+function newrating() {
+    return (Math.floor(Math.random() * 10) + 1)
+  }
+
+
+
+
+
+
+</script>
