@@ -3,7 +3,7 @@ This is hotstar movie app have search functionality with suggestions this is a s
 
 ## Project Details
 - hotstar mini project in which you can search the movies .
-- after clicking on perticular movie yopu can see the cast of movie character.
+- after clicking on perticular movie you can see the cast of movie character.
 
 
 ![Screenshot (682)](https://user-images.githubusercontent.com/105913828/191724102-1b472406-4566-445c-88b1-596a9f97b993.png)
@@ -24,7 +24,7 @@ This is hotstar movie app have search functionality with suggestions this is a s
 ## learning
 - in this project i learnt how to fetch the data from api
 - use the fetch funtion and get the data
-- how to use debouncing. and geting the suggestion according to search 
+- how to use debouncing. and getting the suggestion according to search 
 
 Thanks
 
